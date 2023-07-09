@@ -14,7 +14,7 @@ import java.util.Map;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
     private final Map<String, Employee> employees;
-    int maxCounts = 5;
+    int maxCounts = 30;
 
     public EmployeeServiceImpl() {
         this.employees = new HashMap<>();
@@ -22,13 +22,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     public Employee add(String firstName, String lastName) {
         Employee employee = new Employee(firstName, lastName);
-        if (employees.containsKey(employee.getFullName())) {
-            throw new EmployeeAlreadyAddedException();
-        } else if (!employees.containsKey(employee.getFullName()) && employees.size() < maxCounts) {
-            employees.put(employee.getFullName(), employee);
-            return employee;
-        }
-        throw new EmployeeStorageIsFullException();
+        return add(employee);
+    }
+
+    @Override
+    public Employee add(String firstName, String lastName, int salary, int departmentID) {
+        Employee employee = new Employee(firstName, lastName, salary, departmentID);
+        return add(employee);
     }
 
     public Employee remove(String firstName, String lastName) {
@@ -49,5 +49,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     public List<Employee> findAll() {
         return new ArrayList<>(employees.values());
+    }
+
+    private Employee add(Employee employee) {
+        if (employees.containsKey(employee.getFullName())) {
+            throw new EmployeeAlreadyAddedException();
+        } else if (!employees.containsKey(employee.getFullName()) && employees.size() < maxCounts) {
+            employees.put(employee.getFullName(), employee);
+            return employee;
+        }
+        throw new EmployeeStorageIsFullException();
     }
 }
