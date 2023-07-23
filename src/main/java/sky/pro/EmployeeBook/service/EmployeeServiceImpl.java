@@ -11,23 +11,29 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.apache.commons.lang3.StringUtils.capitalize;
+
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
     private final Map<String, Employee> employees;
+    private final EmployeeValidationService validationService;
     int maxCounts = 30;
 
-    public EmployeeServiceImpl() {
+    public EmployeeServiceImpl(EmployeeValidationService validationService) {
+        this.validationService = validationService;
         this.employees = new HashMap<>();
     }
 
     public Employee add(String firstName, String lastName) {
-        Employee employee = new Employee(firstName, lastName);
+        validationService.validate(firstName,lastName);
+        Employee employee = new Employee(capitalize(firstName), capitalize(lastName));
         return add(employee);
     }
 
     @Override
     public Employee add(String firstName, String lastName, int salary, int departmentID) {
-        Employee employee = new Employee(firstName, lastName, salary, departmentID);
+        validationService.validate(firstName,lastName);
+        Employee employee = new Employee(capitalize(firstName), capitalize(lastName), salary, departmentID);
         return add(employee);
     }
 
