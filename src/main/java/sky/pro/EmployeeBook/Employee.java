@@ -13,7 +13,7 @@ public class Employee {
         Random random = new Random();
         this.firstName = firstName;
         this.lastName = lastName;
-        this.salary = random.nextInt(10000) +1000;
+        this.salary = random.nextInt(10000) + 1000;
         this.departmentID = random.nextInt(5) + 1;
     }
 
@@ -56,7 +56,8 @@ public class Employee {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
-        return salary == employee.salary && departmentID == employee.departmentID && Objects.equals(firstName, employee.firstName) && Objects.equals(lastName, employee.lastName);
+        return salary == employee.salary && departmentID == employee.departmentID && Objects.equals(firstName,
+                employee.firstName) && Objects.equals(lastName, employee.lastName);
     }
 
     @Override

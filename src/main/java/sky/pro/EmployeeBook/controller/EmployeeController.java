@@ -1,9 +1,10 @@
-package sky.pro.EmployeeBook;
+package sky.pro.EmployeeBook.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import sky.pro.EmployeeBook.Employee;
 import sky.pro.EmployeeBook.service.EmployeeService;
 
 import java.util.List;

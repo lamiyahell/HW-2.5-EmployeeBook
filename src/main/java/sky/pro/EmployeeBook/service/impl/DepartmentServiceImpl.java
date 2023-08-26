@@ -1,8 +1,10 @@
-package sky.pro.EmployeeBook.service;
+package sky.pro.EmployeeBook.service.impl;
 
 import org.springframework.stereotype.Service;
 import sky.pro.EmployeeBook.Employee;
 import sky.pro.EmployeeBook.exception.EmployeeNotFoundException;
+import sky.pro.EmployeeBook.service.DepartmentService;
+import sky.pro.EmployeeBook.service.EmployeeService;
 
 import java.util.Collection;
 import java.util.List;
@@ -14,11 +16,19 @@ import static java.util.Comparator.comparing;
 import static java.util.Comparator.comparingInt;
 
 @Service
-public class DepartmentServiceImpl implements DepartmentService{
+public class DepartmentServiceImpl implements DepartmentService {
     private EmployeeService employeeService;
 
     public DepartmentServiceImpl(EmployeeService employeeService) {
         this.employeeService = employeeService;
+    }
+
+    @Override
+    public Integer getDepartmentSalarySum(int departmentID) {
+        return employeeService.findAll().stream()
+                .filter(e -> e.getDepartmentID() == departmentID)
+                .mapToInt(Employee::getSalary)
+                .sum();
     }
 
     @Override

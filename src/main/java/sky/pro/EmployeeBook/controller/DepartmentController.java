@@ -1,9 +1,7 @@
-package sky.pro.EmployeeBook;
+package sky.pro.EmployeeBook.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import sky.pro.EmployeeBook.Employee;
 import sky.pro.EmployeeBook.service.DepartmentService;
 
 import java.util.Collection;
@@ -19,23 +17,28 @@ public class DepartmentController {
         this.departmentService = departmentService;
     }
 
-    @GetMapping("/max-salary")
-    public Employee findEmployeeWithMaxSalary(@RequestParam int departmentID) {
+    @GetMapping("/{departmentID}/salary/sum")
+    public Integer getDepartmentSalarySum(@PathVariable int departmentID) {
+        return departmentService.getDepartmentSalarySum(departmentID);
+    }
+
+    @GetMapping("/{departmentID}/salary/max")
+    public Employee findEmployeeWithMaxSalary(@PathVariable int departmentID) {
         return departmentService.findEmployeeWithMaxSalary(departmentID);
     }
 
-    @GetMapping("/min-salary")
-    public Employee findEmployeeWithMinSalary(@RequestParam int departmentID) {
+    @GetMapping("/{departmentID}/salary/min")
+    public Employee findEmployeeWithMinSalary(@PathVariable int departmentID) {
         return departmentService.findEmployeeWithMinSalary(departmentID);
     }
 
-    @GetMapping("/all")
+    @GetMapping("/employees")
     public Map<Integer, List<Employee>> findEmployeeByDepartment() {
         return departmentService.findEmployeesByDepartment();
     }
 
-    @GetMapping(value = "/all", params = {"departmentID"})
-    public Collection<Employee> findEmployeeByDepartment(@RequestParam int departmentID) {
+    @GetMapping(value = "/{departmentID}/employees")
+    public Collection<Employee> findEmployeeByDepartment(@PathVariable int departmentID) {
         return departmentService.findEmployeesByDepartment(departmentID);
     }
 }
